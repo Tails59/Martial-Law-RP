@@ -1,0 +1,17 @@
+"MLRP"
+{
+	"base"		"sandbox"
+	"title"		"Martial Law RP"
+	"version"	"0"
+	"description"	"Roleplay in a city under Martial Law"
+
+	"author_name"	"Tails"
+	"author_url"	"https://steamcommunity.com/id/Tails59/, https://github.com/Tails59"
+
+	"icon"		""
+	"info"		""
+	"hide"		"0"
+	"menusystem"	"1"
+
+	"selectable"	"1"
+}
