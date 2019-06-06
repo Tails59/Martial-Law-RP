@@ -1,4 +1,4 @@
-"MLRP"
+"martial-law-rp"
 {
 	"base"		"sandbox"
 	"title"		"Martial Law RP"
