@@ -24,28 +24,44 @@ function meta:getMoney(readable)
 		return convertToReadable(self._Money)
 	end
 
-	return self.Money
+	return self:GetNW2Int("MLRP.Money", 0)
 end
 
-//Client
-if CLIENT then
-	local ply = LocalPlayer()
-	net.Receive("updateMoney", function()
-		ply._Money = net.ReadInt()
-	end)
-end
-
-//Server
+//Serverside
 if SERVER then
-	local function onMoneyChange(ply)
-		logAction(ply:Nick().." has had their money updated!")
-		net.Start("updateMoney")
-			net.WriteInt(ply._Money)
-		net.Send(ply)
-	end
+	hook.Add("EntityNetworkedVarChanged", "moneyUpdated", function(ply, name, oldval, newval)
+		if not IsValid(ply) or not ply:IsPlayer() then return end
+		if not name == "MLRP.Money" then return end
+		oldval = oldval or "0"
+		logAction(ply:Nick().." has had their money updated from "..oldval.." to "..newval)
+	end)
 
 	function meta:setMoney(val)
-		self._Money = val
-		self:onMoneyChange(self)
+		self:SetNW2Int("MLRP.Money", val)
 	end
+
+	function meta:addMoney(amt)
+		self:setMoney(self:getMoney() + amt)
+	end
+
+	function meta:removeMoney(amt)
+		if self:getMoney() - amt < 0 then //stops money going into the negatives
+			self:setMoney(0)
+			return
+		end
+
+		self:setMoney(self:getMoney() - amt)
+	end
+
+	function meta:canAfford(cost)
+		if self:getMoney() >= tonumber(cost) then
+			return true
+		end
+
+		return false
+	end
+
+	concommand.Add("addmoney",function(ply, name, args, strargs)
+		print(ply:canAfford(args[1]))
+	end)
 end
