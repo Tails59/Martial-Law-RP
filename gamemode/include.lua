@@ -25,5 +25,13 @@ local function includeServer(file)
 end
 
 do
+	includeClient("config.lua")
+	includeClient("client/hud.lua")
+end
+
+do
 	includeServer("server/nwstrings.lua")
+	includeServer("plugins/logs.lua")
+	includeServer("plugins/economy.lua")
+	includeServer("mysql.lua")
 end

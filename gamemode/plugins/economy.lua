@@ -1,6 +1,6 @@
-PLUGIN.Title = "Economy"
-PLUGIN.Author = "Tails"
-PLUGIN.Purpose = "Economy for Martial-Law RP"
+//PLUGIN.Title = "Economy"
+//PLUGIN.Author = "Tails"
+//PLUGIN.Purpose = "Economy for Martial-Law RP"
 
 local meta = FindMetaTable("Player")
 
@@ -32,20 +32,20 @@ if CLIENT then
 	local ply = LocalPlayer()
 	net.Receive("updateMoney", function()
 		ply._Money = net.ReadInt()
-	end
+	end)
 end
 
 //Server
 if SERVER then
-	local function meta:onMoneyChange(new)
-		logAction(self:Nick().." has had their money updated!")
+	local function onMoneyChange(ply)
+		logAction(ply:Nick().." has had their money updated!")
 		net.Start("updateMoney")
-			net.WriteInt(new)
-		net.Send(self)
+			net.WriteInt(ply._Money)
+		net.Send(ply)
 	end
 
 	function meta:setMoney(val)
 		self._Money = val
-		self:onMoneyChange(self._Money)
+		self:onMoneyChange(self)
 	end
 end
