@@ -3,7 +3,7 @@
 
 DeriveGamemode("sandbox")
 
-local function includeClient(File)
+local function addShared(File)
 	include(File)
 	if SERVER then
 		AddCSLuaFile(File)
@@ -25,8 +25,16 @@ local function includeServer(file)
 end
 
 do
-	includeClient("config.lua")
-	includeClient("client/hud.lua")
+	loadFileClient("client/hud.lua")
+
+	addShared("config.lua")
+	addShared("shared/util.lua")
+
+	addShared("plugins/stamina.lua")
+	addShared("plugins/hunger.lua")
+	addShared("plugins/thirst.lua")
+
+	addShared("metatables/shared_player.lua")
 end
 
 do

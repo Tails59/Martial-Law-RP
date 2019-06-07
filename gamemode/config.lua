@@ -15,3 +15,22 @@ MLRP.Logs = {
 	ActionColour = 		Color(066, 206, 244),
 	CommandColour = 	Color(190, 206, 097),
 }
+
+MLRP.Stats = {
+	JumpDrain = 6, //amount of stamina lost after a jump
+
+	HungerDrainTime = 45, //Time before 2 hunger is removed (in seconds)
+
+	ThirstDrainTime = 30, //time before 3 thirst is removed (in seconds)
+}
+
+hook.Add("GetFallDamage", "customFallDamage", function(ply, speed)
+	//use this hook to calculate your own fall damage numbers
+
+	/* example
+
+	local fall_damage = speed / 4 //this will set the fall damage to the players speed divided by 4
+	return fall_damage //dont forget to add a return statement at the end, or the damage will stay default
+
+	*/
+end)
