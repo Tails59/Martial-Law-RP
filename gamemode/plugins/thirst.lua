@@ -17,7 +17,6 @@ if SERVER then
 	end)
 
 	hook.Add("PlayerSpawn", "resetThirstOnSpawn", function(ply)
-		print("test")
 		ply:setThirst(100)
 	end)
 end

@@ -1,15 +1,19 @@
 local player = FindMetaTable("Player")
 
 function player:getStamina()
-		return self:GetNW2Int("MLRP.Stamina", 0)
+	return self:GetNW2Int("MLRP.Stamina", 0)
 end
 
 function player:getHunger()
-		return self:GetNW2Int("MLRP.Hunger", 0)
+	return self:GetNW2Int("MLRP.Hunger", 0)
 end
 
 function player:getThirst()
-		return self:GetNW2Int("MLRP.Thirst", 0)
+	return self:GetNW2Int("MLRP.Thirst", 0)
+end
+
+function player:getRPName()
+	return self:GetNW2String("MLRP.RPName", "FIRSTNAME  LASTNAME")
 end
 
 if CLIENT then
@@ -17,6 +21,20 @@ if CLIENT then
 end
 
 if SERVER then
+	function player:setRPName(name)
+		local heckfinder;
+
+		for k, v in pairs(MLRP.BadWords.BannedNames) do
+			heckfinder, _ = string.find(string.lower(name), v)
+			if heckfinder then
+				return false
+			end
+		end
+		
+		self:SetNW2String("MLRP.RPName", name)
+		return true
+	end
+
 	function player:addStamina(amt)
 		self:SetNW2Int("MLRP.Stamina", math.Clamp(self:GetNW2Int("MLRP.Stamina", 0) + amt, 0, 100))
 	end

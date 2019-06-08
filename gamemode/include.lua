@@ -10,7 +10,7 @@ local function addShared(File)
 	end
 end
 
-local function loadFileClient(File)
+local function addClient(File)
 	if CLIENT then
 		include(File)
 	else
@@ -18,28 +18,34 @@ local function loadFileClient(File)
 	end
 end
 
-local function includeServer(file)
+local function addServer(file)
 	if SERVER then
 		include(file)
 	end
 end
 
 do
-	loadFileClient("client/hud.lua")
+	addClient("client/hud.lua")
+end
 
+do
 	addShared("config.lua")
+	addShared("shared.lua")
 	addShared("shared/util.lua")
+	addShared("plugins/logs.lua")
+	addShared("items.lua")
 
 	addShared("plugins/stamina.lua")
 	addShared("plugins/hunger.lua")
 	addShared("plugins/thirst.lua")
-
+	addShared("plugins/economy.lua")
+	
 	addShared("metatables/shared_player.lua")
 end
 
 do
-	includeServer("server/nwstrings.lua")
-	includeServer("plugins/logs.lua")
-	includeServer("plugins/economy.lua")
-	includeServer("mysql.lua")
+	addServer("metatables/sv_player.lua")
+	addServer("mysql.lua")
 end
+
+

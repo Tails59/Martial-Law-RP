@@ -8,9 +8,8 @@ function GM:ShutDown()
 end
 
 function GM:GetFallDamage(ply, speed)
-	return speed/30
+	return speed/35
 end
 
-function GM:PlayerSpawn()
-
-end
+//function GM:PlayerSpawn()
+//end

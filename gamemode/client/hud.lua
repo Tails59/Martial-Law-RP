@@ -1,4 +1,4 @@
-if SERVER then return end
+AddCSLuaFile()
 
 local hud = {}
 
@@ -62,6 +62,7 @@ local default_colours = {
 	},
 }
 
+
 local hide = {
 	CHudHealth = true,
 	CHudBattery = true,
@@ -71,10 +72,6 @@ hook.Add("HUDShouldDraw", "hidedefaulthud", function(name)
 	if hide[name] then return false end
 end)
 
-local function HUDPaint(name)
-
-end
-hook.Add("HUDPaint", "drawHUD", HUDPaint)
 
 local health_icon = Material("hudicons/heart_icon.png")
 local hunger_icon = Material("hudicons/burger_icon.png")
@@ -83,6 +80,7 @@ local stamina_icon = Material("hudicons/running_icon.png")
 
 local healthValue = 0
 hook.Add("HUDPaint", "drawHealthbar", function()
+	local ply = ply or LocalPlayer()
 	local colors = default_colours.healthbar
 	local x, y, w, h = ScrW/2 - 0.22*ScrW/2, 5, 0.22*ScrW, 0.035*ScrH
 
@@ -97,7 +95,7 @@ hook.Add("HUDPaint", "drawHealthbar", function()
 	surface.SetDrawColor( colour( colors.background ) )
 	surface.DrawRect( x, y, w, h )
  
-	healthValue = Lerp(2.5 * FrameTime(), healthValue, LocalPlayer():Health()/100)
+	healthValue = Lerp(2.5 * FrameTime(), healthValue, ply:Health()/100)
 	surface.SetDrawColor( colour( colors.fill ))
 	surface.DrawRect( x, y, w * healthValue, h)
 
@@ -108,6 +106,7 @@ end)
 
 local staminaval = 0
 hook.Add("HUDPaint", "drawStaminaBar", function()
+	local ply = ply or LocalPlayer()
 	local colors = default_colours.staminabar
 	local x, y, w, h = ScrW/2 - 0.22*ScrW/2, variables.marginB - 0.03*ScrH, 0.22*ScrW, 0.03*ScrH
 
@@ -122,7 +121,7 @@ hook.Add("HUDPaint", "drawStaminaBar", function()
 	surface.SetDrawColor( colour( colors.background ) )
 	surface.DrawRect( x, y, w, h )
 	 
-	staminaval = Lerp(2.5 * FrameTime(), staminaval, LocalPlayer():getStamina()/100)
+	staminaval = Lerp(2.5 * FrameTime(), staminaval, ply:getStamina()/100)
 	surface.SetDrawColor( colour( colors.fill ))
 	surface.DrawRect( x, y, w * staminaval, h)
 
@@ -133,6 +132,7 @@ end)
 
 local hungerval = 0
 hook.Add("HUDPaint", "drawHungerBar", function()
+	local ply = ply or LocalPlayer()
 	local colors = default_colours.hungerbar
 	local x, y, w, h = ScrW/2 - 0.22*ScrW/2, variables.marginB - 0.062*ScrH, 0.22*ScrW, 0.03*ScrH
 
@@ -147,7 +147,7 @@ hook.Add("HUDPaint", "drawHungerBar", function()
 	surface.SetDrawColor( colour( colors.background ) )
 	surface.DrawRect( x, y, w, h )
 	 
-	hungerval = Lerp(2.5 * FrameTime(), hungerval, LocalPlayer():getHunger()/100)
+	hungerval = Lerp(2.5 * FrameTime(), hungerval, ply:getHunger()/100)
 	surface.SetDrawColor( colour( colors.fill ))
 	surface.DrawRect( x, y, w * hungerval, h)
 
@@ -158,6 +158,7 @@ end)
 
 local thirstval = 0
 hook.Add("HUDPaint", "drawThirstBar", function()
+	local ply = ply or LocalPlayer()
 	local colors = default_colours.thirstbar
 	local x, y, w, h = ScrW/2 - 0.22*ScrW/2, variables.marginB - 0.094*ScrH, 0.22*ScrW, 0.03*ScrH
 
@@ -172,11 +173,57 @@ hook.Add("HUDPaint", "drawThirstBar", function()
 	surface.SetDrawColor( colour( colors.background ) )
 	surface.DrawRect( x, y, w, h )
 	 
-	thirstval = Lerp(2.5 * FrameTime(), thirstval, LocalPlayer():getThirst()/100)
+	thirstval = Lerp(2.5 * FrameTime(), thirstval, ply:getThirst()/100)
 	surface.SetDrawColor( colour( colors.fill ))
 	surface.DrawRect( x, y, w * thirstval, h)
 
 	surface.SetMaterial(thirst_icon)
 	surface.SetDrawColor(0, 0, 0, 255)
-	surface.DrawTexturedRect(ScrW/2 - 25/2, variables.marginB - 0.094*ScrH + 3, 25,25)
+	surface.DrawTexturedRect(ScrW/2 - 25/2 + 3, variables.marginB - 0.094*ScrH + 3, 20,25)
 end)
+
+surface.CreateFont("MLRP.Hud", {
+	font = "Bahnschrift", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
+	extended = false,
+	size = ScreenScale(5),
+	weight = 1000,
+	blursize = 0,
+	scanlines = 0,
+	antialias = true,
+})
+
+surface.CreateFont("MLRP.HudLarge", {
+	font = "Bahnschrift", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
+	extended = false,
+	size = ScreenScale(7),
+	weight = 1000,
+	blursize = 0,
+	scanlines = 0,
+	antialias = true,
+})
+
+local money_icon = Material("hudicons/coins.png")
+local location_icon = Material("hudicons/location_icon.png")
+local clan_icon = Material("hudicons/clan_icon.png")
+local function drawInfoPanel()
+	local ply = ply or LocalPlayer()
+	hud:DrawPanel(variables.marginL, variables.marginB - 0.15*ScrH, 0.2*ScrW, 0.15*ScrH, Color(0, 0, 0, 200))
+
+	local textw, texth;
+
+	surface.SetFont("MLRP.HudLarge")
+	textw, texth = surface.GetTextSize(ply:getRPName())
+	draw.DrawText(ply:getRPName(), "MLRP.HudLarge", variables.marginL + 0.1*ScrW - textw/2, variables.marginB - 0.15*ScrH, Color(255, 255, 255, 255))
+
+	textw, texth = surface.GetTextSize(ply:getMoney(true))
+	surface.SetMaterial(money_icon)
+	surface.DrawTexturedRect(variables.marginL + 18, variables.marginB - 0.115*ScrH, texth+ 10, texth+15)
+	draw.DrawText(ply:getMoney(true), "MLRP.HudLarge", variables.marginL + 65, variables.marginB - 0.115*ScrH+5, Color(255, 255, 255, 255))
+
+	surface.SetMaterial(location_icon)
+	surface.DrawTexturedRect(variables.marginL + 18, variables.marginB - 0.075*ScrH, texth+ 10, texth+15)
+
+	surface.SetMaterial(clan_icon)
+	surface.DrawTexturedRect(variables.marginL + 10, variables.marginB - 0.035*ScrH, texth+ 26, texth+ 10)
+end
+hook.Add("HUDPaint", "infoPanelDraw", drawInfoPanel)

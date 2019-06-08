@@ -11,17 +11,17 @@ end
 
 local function convertToReadable(val)
 	local formatted, k = string.gsub(val, "^(-?%d+)(%d%d%d)", '%1,%2') //taken from the lua wiki because im no egyptian i cant read those hieroglyphics
-
+	local newstr = "$"..formatted
 	if (k==0) then
 		return val
 	end
 
-	return formatted
+	return newstr
 end
 
 function meta:getMoney(readable)
 	if readable then
-		return convertToReadable(self._Money)
+		return convertToReadable(self:GetNW2Int("MLRP.Money", 0))
 	end
 
 	return self:GetNW2Int("MLRP.Money", 0) //return the players money or 0 if nil (can sometimes be nil if the player has not connected before)
@@ -32,7 +32,6 @@ if SERVER then
 	hook.Add("EntityNetworkedVarChanged", "moneyUpdated", function(ply, name, oldval, newval)
 		if not IsValid(ply) or not ply:IsPlayer() then return end
 		if name == "MLRP.Money" then
-			print(name)
 			oldval = oldval or "0"
 			logAction(ply:Nick().." has had their money changed from "..oldval.." to "..newval)
 		end
@@ -76,7 +75,7 @@ if SERVER then
 		return false
 	end
 
-	concommand.Add("addmoney",function(ply, name, args, strargs)
-		print(ply:canAfford(args[1]))
+	concommand.Add("addmoney", function(ply, command, args, argstr)
+		ply:addMoney(tonumber(args[1]))
 	end)
 end
