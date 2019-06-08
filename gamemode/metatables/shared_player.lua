@@ -16,11 +16,50 @@ function player:getRPName()
 	return self:GetNW2String("MLRP.RPName", "FIRSTNAME  LASTNAME")
 end
 
+function player:hasWarrant()
+	return self:GetNW2String("MLRP.Warrant", nil)
+end
+
+function player:getMaxProps()
+	return self:GetNW2Int("MLRP.Proplimit", 100)
+end
+
+function player:getPropCount()
+	return self:GetNW2Int("MLRP.PropCount", 0)
+end
+
 if CLIENT then
 	
 end
 
 if SERVER then
+	function player:addPropToCount()
+		self:SetNW2Int("MLRP.PropCount", self:getPropCount() + 1)
+	end
+
+	function player:removePropFromCount()
+		self:SetNW2Int("MLRP.PropCount", self:getPropCount() - 1)
+	end
+
+	function player:setPropLimit(new)
+		if new > MLRP.Props.MaxLimit then 
+			logFail("Tried to set a prop limit greater than defined maximum!")
+			return
+		end
+		self:SetNW2Int("MLRP.PropLimit", new)
+	end
+
+	function player:setWarrant(type)
+		if not type == "arrest" or "search" or "impound" then
+			logFail("Tried to set a player's warrant with an invalid warrant type!")
+		end
+		self:SetNW2String("MLRP.Warrant", type)
+	end
+
+	function player:unWarrant()
+		self:SetNW2String("MLRP.Warrant", nil)
+	end
+
 	function player:setRPName(name)
 		local heckfinder;
 

@@ -26,6 +26,7 @@ end
 
 do
 	addClient("client/hud.lua")
+	addClient("client/notify.lua")
 end
 
 do

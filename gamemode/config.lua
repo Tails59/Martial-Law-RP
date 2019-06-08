@@ -3,6 +3,10 @@ MLRP = {}
 MLRP.GMFolder = "../"..GM.Folder
 MLRP.EnableMySQL = false
 
+MLRP.Config = {
+	VoiceRadius = 450,
+}
+
 MLRP.Logs = {
 	SuppressWarn = false, //Suppress logging of server warnings
 	SuppressSuccess = false,
@@ -38,6 +42,14 @@ MLRP.BadWords = {
 		"mike hunt",
 		"peter phile",
 	}
+}
+
+MLRP.Props = { //list of banned props
+	BannedProps = {
+		["models/props_c17/oildrum001_explosive.mdl"] = true,
+	},
+
+	MaxLimit = 500, //the absolute maximum prop limit, not even admins will be able to set over this
 }
 
 hook.Add("GetFallDamage", "customFallDamage", function(ply, speed)

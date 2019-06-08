@@ -113,3 +113,76 @@ function GM:RegisterCategory(cat)
 
 	return cat.index
 end
+
+function GM:GetCategory(id)
+	if not id then
+		logFail("GetCategory was passed nil")
+	return end
+
+	-- If we're passed a valid UniqueID, then return the item
+	if MLRP.Item.Cats[id] then
+		return MLRP.Item.Cats[id]
+	end
+
+	-- Otherwise, we're looking for part of a name.
+	local res, len
+	id = string.lower(id)
+
+	for _, data in pairs(MLRP.Item.Cats) do
+		local name = string.lower(data.name)
+
+		if name:find(id, 1, true) then
+			local lon = string.len(name)
+
+			if res then
+				if lon < len then
+					res = data
+					len = lon
+				end
+			else
+				res = data
+				len = lon
+			end
+		end
+	end
+
+	return res
+end
+MLRP.Item.GetCategory = GM.GetCategory
+
+function GM:GetItem(id)
+	if not id then
+		logFail("GetItem was passed nil")
+	return end
+
+	-- If we're passed a valid UniqueID, then return the item
+	if MLRP.Item.Items[id] then
+		return MLRP.Item.Items[id]
+	end
+
+	-- Otherwise, we're looking for part of a name.
+	local res, len
+	id = string.lower(id)
+
+	for _, data in pairs(MLRP.Item.Items) do
+		local name = string.lower(data.name)
+
+
+		if name:find(id, 1, true) then
+			local lon = string.len(name)
+
+			if res then
+				if lon < len then
+					res = data
+					len = lon
+				end
+			else
+				res = data
+				len = lon
+			end
+		end
+	end
+
+	return res
+end
+MLRP.Item.GetItem = GM.GetItem
