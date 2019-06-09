@@ -1,6 +1,6 @@
 MLRP = {}
 
-MLRP.GMFolder = "../"..GM.Folder
+MLRP.GMFolder = GM.Folder
 MLRP.EnableMySQL = false
 
 MLRP.Config = {

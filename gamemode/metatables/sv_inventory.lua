@@ -1,3 +1,4 @@
+/*
 arista.inventory = {}
 
 function arista.inventory.update(player, id, amount, force)
@@ -125,3 +126,4 @@ timer.Simple(1, function()
 		end
 	end
 end)
+*/

@@ -3,8 +3,7 @@ AddCSLuaFile()
 local item = FindMetaTable("Item")
 
 if not item then
-	arista.logs.log(arista.logs.E.FATAL, "COULD NOT FIND ITEM METATABLE!")
-
+	logFatal("COULD NOT FIND ITEM METATABLE")
 	return
 end
 

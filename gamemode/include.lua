@@ -24,28 +24,51 @@ local function addServer(file)
 	end
 end
 
+local function addMetatableFolder()
+	local path = MLRP.GMFolder.."/gamemode/metatables/"
+	
+	local files, folders = file.Find(path.."*", "GAME")
+
+	local type
+	for k, v in pairs(files) do
+		type = string.sub(v, 1, 2)
+
+		if type == "cl" then
+			addClient("metatables/"..v)
+		elseif type == "sv" then
+			addServer("metatables/"..v)
+		else
+			addShared("metatables/"..v)
+		end
+	end
+end
+
 do
-	addClient("client/hud.lua")
-	addClient("client/notify.lua")
+	addClient("client/vgui/hud.lua")
+	addClient("client/vgui/notify.lua")
 end
 
 do
 	addShared("config.lua")
+	addShared("items.lua")
+	
+	addMetatableFolder()
 	addShared("shared.lua")
 	addShared("shared/util.lua")
 	addShared("plugins/logs.lua")
-	addShared("items.lua")
+	
 
 	addShared("plugins/stamina.lua")
 	addShared("plugins/hunger.lua")
 	addShared("plugins/thirst.lua")
 	addShared("plugins/economy.lua")
+	addShared("plugins/vehicles.lua")
 	
-	addShared("metatables/shared_player.lua")
+	//addShared("metatables/shared_player.lua")
 end
 
 do
-	addServer("metatables/sv_player.lua")
+	//addServer("metatables/sv_player.lua")
 	addServer("mysql.lua")
 end
 

@@ -20,11 +20,12 @@ local mt = {
 	end
 }
 setmetatable(MLRP.Item.Meta, mt)
+debug.getregistry().Item = MLRP.Item.Meta //does something im too underpaid to explain
 
 function GM:LoadItems()
 	logAction("Loading items...")
 	local path = self.Folder.."/gamemode/items/"
-
+	
 	local files, folders, _
 	files, _ = file.Find(path.."base/*.lua", "GAME")
 

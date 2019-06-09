@@ -1,3 +1,4 @@
+/*
 arista.inventory = {}
 arista.inventory.stored = {}
 arista.inventory.updatePanel = true
@@ -64,3 +65,4 @@ function arista.inventory.canFit(size, inv)
 		return true
 	end
 end
+*/
