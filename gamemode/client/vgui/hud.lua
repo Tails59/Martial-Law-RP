@@ -38,25 +38,21 @@ local variables = {
 
 local default_colours = {
 	healthbar = {
-		border = Color(0, 0, 0, 255),
 		fill = Color(130, 40, 42, 200),
 		background = Color(114, 114, 114, 150),
 	},
 
 	staminabar = {
-		border = Color(0, 0, 0, 255),
 		fill = Color(82, 64, 196, 255),
 		background = Color(114, 114, 114, 255),
 	},
 
 	hungerbar = {
-		border = Color(0, 0, 0, 255),
 		fill = Color(128, 186, 107, 255),
 		background = Color(114, 114, 114, 255),
 	},
 
 	thirstbar = {
-		border = Color(0, 0, 0, 255),
 		fill = Color(46, 149, 193, 255),
 		background = Color(114, 114, 114, 255),
 	},

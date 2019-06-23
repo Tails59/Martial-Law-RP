@@ -46,6 +46,7 @@ end
 do
 	addClient("client/vgui/hud.lua")
 	addClient("client/vgui/notify.lua")
+	addClient("client/vgui/vehiclehud.lua")
 end
 
 do
@@ -56,7 +57,7 @@ do
 	addShared("shared.lua")
 	addShared("shared/util.lua")
 	addShared("plugins/logs.lua")
-	
+	addShared("plugins/debug.lua")
 
 	addShared("plugins/stamina.lua")
 	addShared("plugins/hunger.lua")
@@ -64,12 +65,11 @@ do
 	addShared("plugins/economy.lua")
 	addShared("plugins/vehicles.lua")
 	
-	//addShared("metatables/shared_player.lua")
 end
 
 do
-	//addServer("metatables/sv_player.lua")
 	addServer("mysql.lua")
+	addServer("server/nwstrings.lua")
 end
 
 

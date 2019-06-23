@@ -2,7 +2,6 @@ local item = FindMetaTable("Item")
 
 if not item then
 	logFatal("COULD NOT FIND ITEM METATABLE")
-
 	return
 end
 
@@ -11,8 +10,14 @@ end
 -- @param ply The player who has clicked 'use' on an item
 -- @return True for success, false for failure.
 function item:use(ply)
-	local inventory = ply:getAristaVar("inventory")[self.uniqueID]
+	local inventory = ply:GetNW2Table("MLRP.Inventory")[self.uniqueID]
+	
+	if not inventory then
+		logFail("this didnt work")
+	end
+
 	if not self.onUse or not (inventory and inventory > 0) or self:onUse(ply) == false then
+		print("No on use method")
 		return false
 	end
 

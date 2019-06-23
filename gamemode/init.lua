@@ -51,6 +51,11 @@ function GM:PlayerCanArrest(ply, target)
 	return false
 end
 
+function GM:PlayerInitialSpawn(ply)
+	ply:SetRunSpeed(MLRP.Stats.RunSpeed)
+	ply:SetWalkSpeed(MLRP.Stats.WalkSpeed)
+end
+
 function GM:PlayerSpawnProp(ply, model, ent)
 	if ply:getPropCount() >= ply:getMaxProps() then return end
 	if MLRP.Props.BannedProps[model] then
@@ -58,7 +63,7 @@ function GM:PlayerSpawnProp(ply, model, ent)
 		return false
 	end
 
-
+	return true
 end
 
 

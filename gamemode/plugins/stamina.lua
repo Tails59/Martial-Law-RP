@@ -51,6 +51,7 @@ if SERVER then
 	end)
 
 	hook.Add("PlayerSpawn", "resetStaminaOnSpawn", function(ply)
+		ply:setExhausted(false)
 		ply:setStamina(100)
 	end)
 end

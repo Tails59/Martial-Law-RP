@@ -12,9 +12,6 @@ end
 
 function eachSecond()
 	hook.Call("eachSecond")
-	if not timer.Exists("eachSecond") then
-		logFatal("eachSecond timer has failed, you've probably got a bad hook somewhere")
-	end
 end
 timer.Create("eachSecond", 1, 0, eachSecond)
 

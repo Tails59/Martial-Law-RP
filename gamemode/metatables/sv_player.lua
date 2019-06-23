@@ -74,6 +74,32 @@ function player:unWarrant()
 	self:SetNW2String("MLRP.Warrant", nil)
 end
 
+function player:setCustomJob()
+	local heckfinder;
+	for k, v in pairs(MLRP.BadWords.BannedJobs) do
+		heckfinder, _ = string.find(string.lower(name), v)
+		if heckfinder then
+			return false
+		end
+	end
+
+	self:SetNW2String("MLRP.Job", name)
+	return true
+end
+
+local function toggleCuff(ply, cuffed)
+	print("oh no youre cuffed")
+end
+function player:cuff()
+	self:SetNW2Bool("MLRP.Handcuffed", true)
+	toggleCuff(self, true)
+end
+
+function player:uncuff()
+	self:SetNW2Bool("MLRP.Handcuffed", false)
+	toggleCuff(self, false)
+end
+
 function player:setRPName(name)
 	local heckfinder;
 

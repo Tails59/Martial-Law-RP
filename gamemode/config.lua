@@ -31,7 +31,7 @@ MLRP.Stats = {
 
 	ExhaustedRunSpeed = 150, //sprint speed when player has low stamina
 	WalkSpeed = 150, //default walking speed, not affected by stamina
-	RunSpeed = 250, //default run speed
+	RunSpeed = 300, //default run speed
 }
 
 MLRP.BadWords = {
@@ -49,7 +49,42 @@ MLRP.Props = { //list of banned props
 		["models/props_c17/oildrum001_explosive.mdl"] = true,
 	},
 
+	//put the model path of any chairs you add, this is used to stop the petrol meter and other actual vehicle things
+	//from being shown. Gmod treats chairs as vehicles too.
+	Chairs = { 
+		"models/nova/airboat_seat.mdl",
+		"models/props_phx/carseat.mdl",
+		"models/props_phx/carseat2.mdl",
+		"models/props_phx/carseat3.mdl",
+		"models/nova/jalopy_seat.mdl",
+		"models/nova/jeep_seat.mdl",
+		"models/nova/chair_office01.mdl",
+		"models/nova/chair_wood01.mdl",
+		"models/nova/chair_office02.mdl",
+		"models/nova/chair_plastic01.mdl",
+	},
+
 	MaxLimit = 500, //the absolute maximum prop limit, not even admins will be able to set over this
+}
+
+MLRP.Veh = {
+	//Use this function for calculating the rate at which vehicles use fuel
+	//If you've got the knowledge you can use this to make certain vehicles use less fuel
+	FuelEfficiency = function(veh)
+		//An example of varying efficiency based on the car
+		/*
+		if veh:GetModel() == "badcar.mdl" then
+			return 0.35
+		else
+			return 0.1
+		end
+		//Would return a higher usage rate for a car with the model "badcar.mdl"
+		*/
+
+		//take 0.1 fuel each second the car has the engine enabled
+		//This works out at around 1 full tank each ~15 minutes
+		return 0.1 
+	end
 }
 
 hook.Add("GetFallDamage", "customFallDamage", function(ply, speed)

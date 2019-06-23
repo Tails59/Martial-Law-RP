@@ -86,7 +86,7 @@ function GM:LoadItems()
 					local uid = item:sub(1, -5)
 					ITEM.uniqueID = uid
 					ITEM.category = newCat
-					//ITEM:register()
+					ITEM:register()
 
 					ITEM = nil
 
@@ -187,3 +187,41 @@ function GM:GetItem(id)
 	return res
 end
 MLRP.Item.GetItem = GM.GetItem
+
+local itemmeta = FindMetaTable("Item")
+function itemmeta:register()
+	if not self.uniqueID then
+		ErrorNoHalt("Item with no uniqueID registered!\nDumping table:\n")
+		PrintTable(self)
+
+		return false
+	end
+
+	if self.base then
+		local base = {}
+		self.baseClass = {}
+
+		if type(self.Base) == "table" then
+			for _, id in ipairs(self.base) do
+				table.Merge(base, MLRP.Item.Items[id] or {})
+			end
+		else
+			table.Merge(base, MLRP.Item.Items[self.base] or {})
+		end
+
+		for k,v in pairs(base) do
+			if not self[k] then
+				self[k] = v
+			end
+
+			self.baseClass[k] = v
+		end
+	end
+
+	if self.model then
+		util.PrecacheModel(self.model)
+	end
+
+	MLRP.Item.Items[self.uniqueID] = self
+end
+

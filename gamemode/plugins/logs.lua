@@ -12,6 +12,7 @@ end
 function logFail(err)
 	if MLRP.Logs.SuppressFail then return end
 	MsgC(time().. " - ", MLRP.Logs.FailColour, "[FAIL] ", err)
+	debug.Trace()
 	MsgN("")
 end
 
@@ -30,6 +31,7 @@ end
 function logWarn(warn)
 	if MLRP.Logs.SuppressWarn then return end
 	MsgC(time().. " - ",MLRP.Logs.WarnColour, "[WARN] ", warn)
+	debug.Trace()
 	MsgN("")
 end
 
@@ -41,5 +43,6 @@ end
 
 function logFatal(thing) //for big bad errors that will break the whole gm
 	MsgC(time().. " - ",Color(255, 0, 0, 255), "[F A T A L] ", thing, " [F A T A L]")
+	debug.Trace()
 	MsgN("")
 end

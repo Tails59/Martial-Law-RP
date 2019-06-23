@@ -1,0 +1,9 @@
+
+All of the nwvars are using the better NW2Var system, check the wiki for info.
+"MLRP.Hunger"
+"MLRP.Thirst"
+"MLRP.PropCount"
+"MLRP.Warrant"
+"MLRP.Stamina"
+"MLRP.PropLimit"
+"MLRP.Exhausted"
